@@ -3,20 +3,22 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import SeccionModule from './modules/seccion/seccion.module';
+import ContenidoModule from './modules/contenido/contenido.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres', // Cambia según tu base de datos
       host: 'localhost',
-      port: 5433,
+      port: 5432,
       username: 'postgres',
       password: 'chelseafc11',
       database: 'app-gestion',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true, // ¡No usar en producción!
     }),
-    SeccionModule
+    SeccionModule,
+    ContenidoModule
   ],
   controllers: [AppController],
   providers: [AppService],

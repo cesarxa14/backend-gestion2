@@ -2,12 +2,15 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as bodyParser from 'body-parser';
 import * as dotenv from 'dotenv';
+import { ValidationPipe } from '@nestjs/common';
 
 // Cargar el archivo .env
 dotenv.config();
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
   // Configurar bodyParser con un límite mayor para las solicitudes
   app.use(bodyParser.json({ limit: '10mb' })); // Ajusta el tamaño límite como desees

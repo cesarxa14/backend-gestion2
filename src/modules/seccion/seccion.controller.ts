@@ -7,7 +7,7 @@ import { GetSectionByIdDto } from "./dtos/get-section-by-id.dto";
 import { updateOrderSubsectionsDto } from "./subseccion/dtos/update-order-subsections.dto";
 
 
-@Controller('secciones')
+@Controller('sections')
 export default class SeccionController {
     constructor(private readonly seccionService: SeccionService){}
 

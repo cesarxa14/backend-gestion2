@@ -23,6 +23,4 @@ export default class SubSeccionController {
         return await this.subseccionService.createSubSeccion(createSubseccionDto);
     }
 
-    
-
 }
