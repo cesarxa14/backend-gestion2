@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Post, UploadedFile, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, UploadedFile, UseInterceptors } from "@nestjs/common";
 import ContenidoService from "./contenido.service";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { Contenido } from "./contenido.entity";
 import { CreateContenidoDto } from "./bloques/dtos/create-contenido.dto";
+import { GetContentByIdDto } from "./dtos/get-content-by-id.dto";
 
 
 @Controller('contents')
@@ -12,6 +13,11 @@ export default class ContenidoController {
     @Get()
     async getSeccion(): Promise<Contenido[]>{
         return await this.contenidoService.getContenidos();
+    }
+
+    @Get(':id')
+    async getContentById(@Param() params: GetContentByIdDto,): Promise<Contenido>{
+        return await this.contenidoService.getContentById(params);
     }
 
 

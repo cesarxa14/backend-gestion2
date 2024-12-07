@@ -5,6 +5,7 @@ import { Contenido } from "./contenido.entity";
 import { Repository } from "typeorm";
 import { CreateContenidoDto } from "./bloques/dtos/create-contenido.dto";
 import { Seccion } from "../seccion/seccion.entity";
+import { GetContentByIdDto } from "./dtos/get-content-by-id.dto";
 
 
 @Injectable()
@@ -31,6 +32,20 @@ export default class ContenidoService {
       }
     }
 
+    async getContentById(param: GetContentByIdDto){
+      try {
+          const id = +param.id;
+          return this.contenidoRepository.findOne({
+              where: {
+                  id: id
+              }
+          });
+      } catch(err) {
+          console.log('err', err)
+          throw err;
+      }
+  }
+
     async createContenido(payloadCreate: CreateContenidoDto){
       try{
 
@@ -49,6 +64,7 @@ export default class ContenidoService {
         newContenido.description = payloadCreate.description;
         newContenido.introduction = payloadCreate.introduction;
         newContenido.type = payloadCreate.type;
+        newContenido.link = payloadCreate.link;
 
         const nuevoContenido = this.contenidoRepository.create(newContenido);
         

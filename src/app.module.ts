@@ -10,7 +10,7 @@ import ContenidoModule from './modules/contenido/contenido.module';
     TypeOrmModule.forRoot({
       type: 'postgres', // Cambia según tu base de datos
       host: 'localhost',
-      port: 5432,
+      port: 5433,
       username: 'postgres',
       password: 'chelseafc11',
       database: 'app-gestion',
