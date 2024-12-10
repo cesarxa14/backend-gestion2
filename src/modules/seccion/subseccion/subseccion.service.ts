@@ -5,15 +5,12 @@ import { Subseccion } from "./subseccion.entity";
 import { Repository } from "typeorm";
 import { CreateSubseccionDto } from "./dtos/create-subseccion.dto";
 import { GetSubseccionsByIdSeccionDto } from "./dtos/get-subseccion-by-id-seccion.dto";
-import { url } from "inspector";
 import { Seccion } from "../seccion.entity";
-import { updateOrderSubsectionsDto } from "./dtos/update-order-subsections.dto";
 
 
 @Injectable()
 export default class SubseccionService {
 
-    // TODO: esta configuracion pasarla a variables de entorno
     s3Service: S3Service = new S3Service(
         { 
             region: process.env.REGION_S3, 
@@ -38,7 +35,7 @@ export default class SubseccionService {
                 where: { id: Number(createSubseccionDto.seccion_id) },
             });
 
-            const urlFile = await this.s3Service.uploadBase64File(createSubseccionDto.image_header, 'uploads');
+            const urlFile = await this.s3Service.uploadBase64File(createSubseccionDto.image_header, `uploads/sections/${seccion.id}/subsections`);
             
             let newSubseccion = new Subseccion()
             newSubseccion.name = createSubseccionDto.name;

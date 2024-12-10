@@ -17,6 +17,9 @@ export class Seccion {
   @Column({nullable: true, type: 'varchar'})
   subsections_order: string;
 
+  @Column({nullable: false, type: 'smallint', default: 0})
+  deleted: number;
+
 
   @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UploadedFile, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, UploadedFile, UseInterceptors } from "@nestjs/common";
 import ContenidoService from "./contenido.service";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { Contenido } from "./contenido.entity";
@@ -25,5 +25,15 @@ export default class ContenidoController {
     @UseInterceptors(FileInterceptor('image'))
     async createSeccion(@Body() createSeccionDto: CreateContenidoDto, @UploadedFile() image: Express.Multer.File): Promise<Contenido> {
         return await this.contenidoService.createContenido(createSeccionDto);
+    }
+
+    @Delete(':id')
+    async deleteContent(@Param('id') id: number): Promise<Contenido>{
+        try{
+            return await this.contenidoService.deleteContent(id);
+        }catch(err) {
+            console.log('err: ', err)
+            throw err;
+        }
     }
 }

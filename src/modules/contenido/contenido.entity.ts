@@ -37,6 +37,9 @@ export class Contenido {
   @JoinColumn({ name: 'seccion_id' }) 
   seccion: Seccion;
 
+  @Column({nullable: false, type: 'smallint', default: 0})
+  deleted: number;
+
 
   @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;

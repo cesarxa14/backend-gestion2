@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { S3Service } from "src/shared/services/s3.service";
 import { Contenido } from "./contenido.entity";
@@ -26,7 +26,12 @@ export default class ContenidoService {
 
     async getContenidos(){
       try{
-        return this.contenidoRepository.find();
+        return this.contenidoRepository.find({
+          where: {
+            deleted: 0
+          }
+        }
+        );
       } catch(err){
         console.log('err: ', err)
       }
@@ -77,7 +82,26 @@ export default class ContenidoService {
     }
 
 
+    async deleteContent(id: number){
+      try{
+          const contentFound = await this.contenidoRepository.findOne({
+              where: {
+                  id: id
+              }
+          });
 
+          if (!contentFound) {
+              throw new NotFoundException(`Content with id ${id} not found`);
+          }
+
+          contentFound.deleted = 1;
+          return this.contenidoRepository.save(contentFound);
+
+      } catch(err) {
+          console.log('err: ', err)
+          throw err;
+      }
+  }
 
 
   
